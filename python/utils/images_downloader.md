@@ -1,6 +1,6 @@
 # images_downloader.py
 
-## How am I
+## Who am I 
 I am a python job capable to download all render and tile images from [https://hearthstonejson.com/](https://hearthstonejson.com/).
 
 ## How do I do my job
