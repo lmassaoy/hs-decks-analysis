@@ -6,7 +6,7 @@ I am a python job capable to download all render and tile images from [https://h
 ## How do I do my job
 I run three threads to have a better performance to download everything I need, by using the python lib concurrent.futures. If you're interested, please read my script :)
 
-## How run me
+## How to run me
 First: make sure you already have the directories where the images will be downloaded
 - /hs-decks-analysis/data/images/cards/renders/256x/
 - /hs-decks-analysis/data/images/cards/renders/512x/
