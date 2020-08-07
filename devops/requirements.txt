@@ -4,3 +4,4 @@ pandasql-0.7.3
 numpy==1.19.1
 altair==4.1.0
 matplotlib==3.3.0
+requests==2.23.0
