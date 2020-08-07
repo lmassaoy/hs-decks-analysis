@@ -18,7 +18,7 @@ $ python3 python/utils/images_downloader.py
 
 Size of the card list: 2674
 Starting: Download Render 512x
-Starting: Download Render 256
+Starting: Download Render 256x
 Starting: Download Tiles
 --- It took 3907.6407327651978 seconds to complete all downloads ---
 ```
