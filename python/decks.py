@@ -115,7 +115,7 @@ rating_slider = st.sidebar.slider('Rating',min_rating,max_rating,[min_rating,max
 st.title("Decks Analysis")
 
 medivh_image = build_image(medivh_path)
-st.image(medivh_image, use_column_width=True)
+st.image(medivh_image, width=600)
 
 
 melt_id_vars = ['craft_cost','date','deck_archetype','deck_class','deck_format','deck_id','deck_set','deck_type','rating','title','user']
@@ -243,7 +243,7 @@ decks_per_class_bars = alt.Chart(decks_per_class.head(20)).mark_bar(size=30).enc
 decks_per_class_text = decks_per_class_bars.mark_text(
     align='center',
     baseline='middle',
-    dy=-5  # Nudges text to the top
+    dy=-5
 ).encode(
     text='numberOfDecks:Q'
 )
@@ -255,6 +255,31 @@ decks_per_class_chart = (decks_per_class_bars+decks_per_class_text).configure_ax
 ).properties(width=600)
 
 st.write(decks_per_class_chart)
+
+
+st.write("Decks Built Over Time")
+
+
+def generate_deck_over_time(df):
+    deck_over_time = df[["date","deck_id","deck_class"]]
+    deck_over_time['Year'] = pd.DatetimeIndex(deck_over_time['date']).year
+    deck_over_time['Month'] = pd.DatetimeIndex(deck_over_time['date']).month
+    deck_over_time['Year-Month'] = deck_over_time['Year'].map(str) + '-' + deck_over_time['Month'].map(str)
+    deck_over_time = deck_over_time.rename(columns={"deck_class":"deckClass","deck_id":"numberOfDecks"}, errors="raise")
+    deck_over_time = deck_over_time.groupby(["Year","Month","Year-Month","deckClass"]).numberOfDecks.nunique().reset_index()
+    return deck_over_time.sort_values(by=["Year","Month"],ascending=False)[["Year-Month","deckClass","numberOfDecks"]]
+
+
+deck_over_time = generate_deck_over_time(result_df)
+# deck_over_time.to_csv("/Users/Yamada/Git/git-projects/hs-decks-analysis/data/datasets/decks/decks_over_time.csv",index=False)
+deck_over_time_bars = alt.Chart(deck_over_time).mark_line().encode(
+    x='Year-Month:O',
+    y='numberOfDecks:Q',
+    color=alt.Color('deckClass', scale=alt.Scale(domain=sorted_list_class, range=class_color_range)),
+    tooltip=['Year-Month','deckClass', 'numberOfDecks']
+)
+
+st.write(deck_over_time_bars.properties(height=400))
 
 
 st.write("Cards Appearance (Top 20)")
@@ -278,7 +303,7 @@ cards_appearance_bars = alt.Chart(cards_appearance.head(20)).mark_bar(size=20).e
 cards_appearance_text = cards_appearance_bars.mark_text(
     align='left',
     baseline='middle',
-    dx=3  # Nudges text to right so it doesn't appear on top of the bar
+    dx=3
 ).encode(
     text='numberOfAppearance:Q'
 )
