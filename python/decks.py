@@ -3,6 +3,7 @@ import pandas as pd
 from PIL import Image
 from datetime import datetime
 import os
+import altair as alt
 
 
 os.environ['TZ'] = 'UTC'
@@ -11,13 +12,12 @@ decks_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/datasets/dec
 cards_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/datasets/cards/cards.json"
 
 
-cards_sample_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/design/hearthstone_cards_sample.png_2.png"
 hearthstone_logo_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/logos/hearthstone_title_small.png"
 medivh_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/design/medivh_logo.png"
 innkeeper_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/design/innkeeper.png"
 innkeeper_2_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/design/innkeeper_2.png"
-heroes_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/design/heroes_hs.png"
-
+heroes_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/logos/hs_heroes_icons.png"
+cards_sample_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/design/hearthstone_cards_sample.png_2.png"
 
 def build_image(path):
     return Image.open(path)
@@ -54,7 +54,7 @@ min_craft_cost = int(craft_cost_dict["min"])
 max_craft_cost = int(craft_cost_dict["max"])
 
 
-@st.cache()
+@st.cache(allow_output_mutation=True)
 def get_deck_class(df):
     return df["deck_class"].drop_duplicates().values.tolist()
 
@@ -82,7 +82,7 @@ hearthstone_logo_image = build_image(hearthstone_logo_path)
 st.sidebar.image(hearthstone_logo_image, use_column_width=True)
 
 
-st.sidebar.title("Dataframe Filters")
+st.sidebar.title("Filters")
 
 
 date_slider = st.sidebar.slider('Date',min_date,max_date,[min_date,max_date])
@@ -164,7 +164,7 @@ if len(enhanced_decks_df.index) == len(decks_df.index)*30:
 else:
     st.error("The result number of rows aren't correct")
 
-st.markdown("## **Result Dataframe (sample)**")
+st.markdown("## **Result Dataframe**")
 st.text("Use the filters on the left sidebar to explore the dataframe below")
 
 
@@ -185,28 +185,108 @@ if craft_cost_slider[0]!=min_craft_cost or craft_cost_slider[1]!=max_craft_cost:
 if rating_slider[0]!=min_rating or rating_slider[1]!=max_rating:
     result_df = result_df[result_df['rating'].between(rating_slider[0], rating_slider[1])]
 
-st.dataframe(result_df.head(3000))
 
-st.write("Showing",3000,"rows (= 100 decks)")
-st.write(len(result_df.index),"rows total in the dataframe")
-
-st.write("**KPIs (Result DF)** :mag:")
-
+@st.cache()
 def calculate_kpis(df):
-    return df
+    df_size = len(result_df.index)
+    decks_count = len(df["deck_id"].drop_duplicates().index)
+    class_count = len(df["deck_class"].drop_duplicates().index)
+    archetype_count = len(df["deck_archetype"].drop_duplicates().index)
+    type_count = len(df["deck_type"].drop_duplicates().index)
+    cards_count = len(df["card_id"].drop_duplicates().index)
+    kpi_dict = {"DF Size": [df_size],"Decks": [decks_count],"Decks Class": [class_count],
+                "Decks Archetype":[archetype_count],"Deck Type": [type_count],"Different Cards": [cards_count]}
+    return kpi_dict
 
-kpis = calculate_kpis(result_df)
-st.dataframe(result_df)
+
+st.markdown("### **KPIs** :bulb:")
+
+kpi_df = pd.DataFrame.from_dict(calculate_kpis(result_df))
+st.table(kpi_df)
+
+st.markdown("### **Sample** :mag:")
+
+st.dataframe(result_df.head(3000))
+st.write("Showing",3000,"rows (= 100 decks)")
 
 innkeeper_2_image = build_image(innkeeper_2_path)
 st.image(innkeeper_2_image, width=400)
 
-# ---------------------------------------------------------------
+# -------------------------- Data Visualization --------------------------
 
-# ---------------------------- Cards -----------------------------
+st.markdown("### **Data Visualization** :bar_chart:")
 
-st.title("Cards Analysis")
+st.write("Decks per Class")
+heroes_image = build_image(heroes_path)
+st.image(heroes_image, use_column_width=True)
 
+def generate_deck_per_class(df):
+    decks_per_class = df[["deck_id","deck_class"]].rename(columns={"deck_class":"deckClass","deck_id":"numberOfDecks"}, errors="raise")
+    return decks_per_class.groupby(['deckClass']).numberOfDecks.nunique().sort_values(ascending=False)
+
+
+decks_per_class = generate_deck_per_class(result_df).reset_index()
+# decks_per_class = decks_per_class.pivot(columns='deckClass', values='numberOfDecks')
+# decks_per_class_list = decks_per_class["numberOfDecks"].values.tolist()
+# decks_per_class = pd.DataFrame.from_dict({'row_1': decks_per_class_list},orient='index',columns=list_class)
+
+class_color_range = ['#FF7D0A','#ABD473','#69CCF0','#F58CBA','#F0F8FF','#FFF569','#0070DE','#9482C9','#C79C6E']
+sorted_list_class = sorted(list_class)
+
+decks_per_class_bars = alt.Chart(decks_per_class.head(20)).mark_bar(size=30).encode(
+    y='numberOfDecks:Q',
+    x=alt.X('deckClass:O', sort='-y'),
+    color=alt.Color('deckClass:O', legend=None, scale=alt.Scale(domain=sorted_list_class, range=class_color_range)),
+    tooltip=['deckClass', 'numberOfDecks']
+)
+
+decks_per_class_text = decks_per_class_bars.mark_text(
+    align='center',
+    baseline='middle',
+    dy=-5  # Nudges text to the top
+).encode(
+    text='numberOfDecks:Q'
+)
+
+decks_per_class_chart = (decks_per_class_bars+decks_per_class_text).configure_axis(
+    grid=False
+).configure_view(
+    strokeWidth=0
+).properties(width=600)
+
+st.write(decks_per_class_chart)
+
+
+st.write("Cards Appearance (Top 20)")
 cards_sample_image = build_image(cards_sample_path)
-st.image(cards_sample_image, use_column_width=True)
+st.image(cards_sample_image, width=500)
 
+
+def generate_cards_appearance(df):
+    cards_appearance = df[["card_name","deck_id"]].rename(columns={"card_name":"cardName","deck_id":"numberOfAppearance"}, errors="raise")
+    return cards_appearance.groupby(['cardName']).numberOfAppearance.count().sort_values(ascending=False)
+
+cards_appearance = generate_cards_appearance(result_df).reset_index()
+
+cards_appearance_bars = alt.Chart(cards_appearance.head(20)).mark_bar(size=20).encode(
+    x='numberOfAppearance:Q',
+    y=alt.Y('cardName:O', sort='-x'),
+    color=alt.Color('numberOfAppearance:Q', legend=None),
+    tooltip=['cardName', 'numberOfAppearance']
+)
+
+cards_appearance_text = cards_appearance_bars.mark_text(
+    align='left',
+    baseline='middle',
+    dx=3  # Nudges text to right so it doesn't appear on top of the bar
+).encode(
+    text='numberOfAppearance:Q'
+)
+
+cards_appearance_chart = (cards_appearance_bars+cards_appearance_text).configure_axis(
+    grid=False
+).configure_view(
+    strokeWidth=0
+).properties(width=800,height=600)
+
+st.write(cards_appearance_chart)
