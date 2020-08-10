@@ -4,23 +4,28 @@ from PIL import Image
 from datetime import datetime
 import os
 import altair as alt
+from utils.images_downloader import ImageRenderDownloader
 
 
+download_agent = ImageRenderDownloader(256)
+
+
+# Setting timezone to avoid datetime issues with pandas
 os.environ['TZ'] = 'UTC'
 
+
 # Dataset files
-decks_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/datasets/decks/data.csv"
-cards_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/datasets/cards/cards.json"
+decks_path = "data/datasets/decks/data.csv"
+cards_path = "data/datasets/cards/cards.json"
 
 
 # Images
-hearthstone_logo_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/logos/hearthstone_title_small.png"
-medivh_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/design/medivh_logo.png"
-innkeeper_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/design/innkeeper.png"
-innkeeper_2_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/design/innkeeper_2.png"
-heroes_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/logos/hs_heroes_icons.png"
-cards_sample_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/design/hearthstone_cards_sample.png_2.png"
-card_selected_path = "/Users/Yamada/Git/git-projects/hs-decks-analysis/data/images/cards/renders/256x/"
+hearthstone_logo_path = "data/images/logos/hearthstone_title_small.png"
+medivh_path = "data/images/design/medivh_logo.png"
+innkeeper_path = "data/images/design/innkeeper.png"
+innkeeper_2_path = "data/images/design/innkeeper_2.png"
+heroes_path = "data/images/logos/hs_heroes_icons.png"
+cards_sample_path = "data/images/design/hearthstone_cards_sample.png_2.png"
 
 
 def build_image(path):
@@ -307,8 +312,12 @@ cards_appearance_selectbox = st.selectbox('Card details',cards_appearance_list, 
 cards_appearance_selection_id = str(cards_df["id"][cards_df["name"] == cards_appearance_selectbox].values[0])
 
 
-card_selected_image = build_image(card_selected_path+cards_appearance_selection_id+".png")
-st.image(card_selected_image, width=200)
+card_selected_path = download_agent.download(cards_appearance_selection_id)
+if card_selected_path is None:
+    st.write("Card image not found :sob:")
+else:
+    card_selected_image = build_image(card_selected_path)
+    st.image(card_selected_image, width=200)
 
 
 cards_appearance_bars = alt.Chart(cards_appearance.head(20)).mark_bar(size=20).encode(

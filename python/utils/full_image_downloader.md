@@ -1,4 +1,4 @@
-# images_downloader.py
+# full_image_downloader.py
 
 ## Who am I 
 I am a python job capable to download all render and tile images from [https://hearthstonejson.com/](https://hearthstonejson.com/).
@@ -16,7 +16,7 @@ First: make sure you already have the directories where the images will be downl
 
 Now you just need to run me:
 ```
-$ python3 python/utils/images_downloader.py
+$ python3 python/utils/full_image_downloader.py
 
 Size of the card list: 2674
 Starting: Download Render 512x
