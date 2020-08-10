@@ -3,7 +3,7 @@
 ## Who am I 
 I am a python job capable to download all render and tile images from [https://hearthstonejson.com/](https://hearthstonejson.com/).
 
-[![OG-317.png](https://i.postimg.cc/K8k1P35f/OG-317.png)](https://postimg.cc/87GkD59f) [![WE1-036.png](https://i.postimg.cc/xqr1gt5P/WE1-036.png)](https://postimg.cc/7JV4Z1pC) [![AT-072.png](https://i.postimg.cc/RhtHM3bX/AT-072.png)](https://postimg.cc/jns5cjT7) [![EX1-284.png](https://i.postimg.cc/HLQ5D8Rz/EX1-284.png)](https://postimg.cc/cKL6fCst)
+[![OG-317.png](https://i.postimg.cc/K8k1P35f/OG-317.png)](https://postimg.cc/87GkD59f) [![WE1-036.png](https://i.postimg.cc/xqr1gt5P/WE1-036.png)](https://postimg.cc/7JV4Z1pC) [![AT-072.png](https://i.postimg.cc/RhtHM3bX/AT-072.png)](https://postimg.cc/jns5cjT7)
 
 ## How do I do my job
 I run three threads to have a better performance to download everything I need, by using the python lib concurrent.futures. If you're interested, please read my script :)
