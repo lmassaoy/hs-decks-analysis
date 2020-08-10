@@ -1,0 +1,8 @@
+data/images/cards/renders/256x/*.png
+data/images/cards/renders/512x/*.png
+data/images/cards/tiles/*.png
+python/utils/__pycache__
+
+
+# OSX
+.DS_Store
