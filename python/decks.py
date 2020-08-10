@@ -21,7 +21,7 @@ cards_path = "data/datasets/cards/cards.json"
 
 # Images
 hearthstone_logo_path = "data/images/logos/hearthstone_title_small.png"
-medivh_path = "data/images/design/medivh_logo.png"
+medivh_path = "data/images/design/hs_decks_analysis-README.png"
 innkeeper_path = "data/images/design/innkeeper.png"
 innkeeper_2_path = "data/images/design/innkeeper_2.png"
 heroes_path = "data/images/logos/hs_heroes_icons.png"
