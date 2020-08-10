@@ -1,0 +1,7 @@
+data/datasets/decks/data.csv
+data/images/cards/renders/256x/*.png
+data/images/cards/renders/512x/*.png
+data/images/cards/tiles/*.png
+
+# OSX
+.DS_Store
