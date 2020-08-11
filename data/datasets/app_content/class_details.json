@@ -1,0 +1,100 @@
+[
+    {
+        "class": "Druid",
+        "color": "#FF7D0A",
+        "hero": {
+            "card_id": "HERO_06",
+            "power_id": "HERO_06bp",
+            "header": "Druid",
+            "subheader": "Nature will rise against you!",
+            "class_description": "Preserve the balance by taking on the many forms of the wild and unleashing nature’s wrath upon your enemies. Druids are flexible combatants with nearly limitless choice in how to handle their opponents. Employ buffs, compel beasts, harness healing powers, or sling damaging spells against anything that threatens the natural order."
+        } 
+    },
+    {
+        "class": "Hunter",
+        "color": "#ABD473",
+        "hero": {
+            "card_id": "HERO_05",
+            "power_id": "HERO_05bp",
+            "header": "Hunter",
+            "subheader": "Let the hunt begin!",
+            "class_description": "According to Hunters, a ruthless offense of tooth and claw is better than any defense. These lone survivalists tap into their feral nature to take down their prey with hidden traps, tamed beasts, and volleys of baleful arrows."
+        }
+    },
+    {
+        "class": "Mage",
+        "color": "#69CCF0",
+        "hero": {
+            "card_id": "HERO_08",
+            "power_id": "HERO_08bp",
+            "header": "Mage",
+            "subheader": "My magic will tear you apart!",
+            "class_description": "No other hero wields the arcane with as much skill and raw power as a Mage. Using their unrivaled array of spells, Mages can wipe entire boards of minions, deal devastating amounts of damage directly to their enemy, or summon creatures of pure energy to do their bidding."
+        }
+    },
+    {
+        "class": "Paladin",
+        "color": "#F58CBA",
+        "hero": {
+            "card_id": "HERO_04",
+            "power_id": "HERO_04bp",
+            "header": "Paladin",
+            "subheader": "The Light protects those who wield it.",
+            "class_description": "Fearsome holy knights, Paladins make use of emboldened minions, healing spells, and Divine Shields to stand stalwart against their enemies and hold out for victory."
+        }
+    },
+    {
+        "class": "Priest",
+        "color": "#E9EAF3",
+        "hero": {
+            "card_id": "HERO_09",
+            "power_id": "HERO_09bp",
+            "header": "Priest",
+            "subheader": "Light smiles upon the just!",
+            "class_description": "The Light calls, but shadows whisper. Heroes of righteousness, Priests have unmatched healing potential and can bestow powerful holy enchantments on their minions. However, there is no light without dark. Priests can also tap into the shadows to manipulate the minds of their enemies and deal mortifying psychic damage."
+        }        
+    },
+    {
+        "class": "Rogue",
+        "color": "#FFF569",
+        "hero": {
+            "card_id": "HERO_03",
+            "power_id": "HERO_03bp",
+            "header": "Rogue",
+            "subheader": "Watch your back!",
+            "class_description": "Using unseen blade, blinding speed, and subtle poison, Rogues can dispatch their enemies before escaping without a trace. Unleash a devastating chain of minions, spells, and attacks all within a single turn."
+        }
+    },
+    {
+        "class": "Shaman",
+        "color": "#0070DE",
+        "hero": {
+            "card_id": "HERO_02",
+            "power_id": "HERO_02bp",
+            "header": "Shaman",
+            "subheader": "Storm, earth and fire, heed my call!",
+            "class_description": "Masters of the primal elements, Shaman manipulate nature’s forces to call up healing rains, unleash torrents of lava, or conjure spiritual allies to aid them in battle. A Shaman’s arsenal reflects the balance of the natural forces they wield: versatile and powerful minions, spells, buffs and damage."
+        }
+    },
+    {
+        "class": "Warlock",
+        "color": "#9482C9",
+        "hero": {
+            "card_id": "HERO_07",
+            "power_id": "HERO_07bp",
+            "header": "Warlock",
+            "subheader": "I am your nightmare!",
+            "class_description": "Power-hungry practitioners of the fel arts, Warlocks have no qualms unleashing debilitating curses, reckless demons, or violent waves of hellfire. They’ll sacrifice anything to take down those who stand in their way, including their own vitality."        }
+        },
+    {
+        "class": "Warrior",
+        "color": "#C79C6E",
+        "hero": {
+            "card_id": "HERO_01",
+            "power_id": "HERO_01bp",
+            "header": "Warrior",
+            "subheader": "Victory or death!",
+            "class_description": "Seasoned fighters of unparalleled prowess, Warriors have mastery over an arsenal of weaponry and armor, allowing them to be both deadly combatants and formidable defenders. Taking damage only serves to enrage the Warrior and his Minions, triggering powerful effects that further enhance their fearsome abilities."
+        }       
+    }
+]
