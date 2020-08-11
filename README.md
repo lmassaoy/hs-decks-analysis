@@ -33,5 +33,9 @@ Here you go:
 $ streamlit run python/popular_cards.py
 ```
 
+Screenshot of the app
+
+[![popular-cards-screenshot.png](https://i.postimg.cc/ncFYqrcz/popular-cards-screenshot.png)](https://postimg.cc/Z0QdSTNt)
+
 ### Running in a container
 Coming soon :)
