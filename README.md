@@ -24,7 +24,7 @@ $ streamlit run python/decks.py
 ```
 
 ### [Popular Cards](https://github.com/lmassaoy/hs-decks-analysis/blob/master/python/popular_cards.py)
-[![OG-317.png](https://i.postimg.cc/K8k1P35f/OG-317.png)](https://postimg.cc/87GkD59f) [![WE1-036.png](https://i.postimg.cc/xqr1gt5P/WE1-036.png)](https://postimg.cc/7JV4Z1pC) [![AT-072.png](https://i.postimg.cc/RhtHM3bX/AT-072.png)](https://postimg.cc/jns5cjT7)
+[![hearthstone-post.gif](https://i.postimg.cc/N0kJ4mty/hearthstone-post.gif)](https://postimg.cc/nsMGVsCZ)
 
 This data app you are about to explore is about the most used cards, seeing cards' details and their presence in the decks built in Hearthpwn.
 
@@ -35,4 +35,3 @@ $ streamlit run python/popular_cards.py
 
 ### Running in a container
 Coming soon :)
-
